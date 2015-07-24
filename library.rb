@@ -4,6 +4,13 @@ class Library
   def initialize(books)
     @books = books.map { |book_hash| Book.new(book_hash)}
   end
+
+  def directory
+    sorted_books = @books.sort_by do |book|
+      [book.author["last_name"], book.title]
+    end
+    sorted_books.each { |book| puts book }
+  end
 end
 
 class Shelf

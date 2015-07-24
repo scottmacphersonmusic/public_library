@@ -13,4 +13,9 @@ class LibraryTest < MiniTest::Test
       assert_instance_of Book, item
     end
   end
+
+  def test_directory_prints_alphabetically_by_author_last_name
+    assert_output(/\A"Guns, Germs and Steel" by Jared Diamond/) { @lib.directory }
+    assert_output(/Talk About Running" by Haruki Murakami\n\z/) { @lib.directory }
+  end
 end
