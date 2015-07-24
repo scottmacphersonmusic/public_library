@@ -2,7 +2,7 @@ class Library
   attr_reader :books
 
   def initialize(books)
-    @books = books
+    @books = books.map { |book_hash| Book.new(book_hash)}
   end
 end
 
