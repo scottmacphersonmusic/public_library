@@ -16,6 +16,14 @@ class Library
     sorted_books.each { |book| puts book }
   end
 
+  def checkout(book_title)
+    book = collect_books.find { |b| b.title == book_title }
+    shelf = book.author['last_name'][0].to_sym
+    removed_book = @shelves[shelf].remove(book.title)
+    removed_book.available = false
+    @checked_out << removed_book
+  end
+
   private
 
   def generate_shelves
@@ -69,9 +77,7 @@ class Shelf
   def remove(book_title)
     index = @books.index { |b| b.title == book_title }
     if index
-      @books.delete_at(index)
-    else
-      puts "'#{book_title}' is not on the shelf."
+      return @books.delete_at(index)
     end
   end
 end
