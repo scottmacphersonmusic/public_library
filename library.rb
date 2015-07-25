@@ -1,25 +1,22 @@
 class Library
-  attr_accessor :books, :shelves
+  attr_accessor :shelves, :checked_out
 
-  def initialize(books)
-    @books   ||= generate_books(books)
+  def initialize(book_hashes)
     @shelves ||= generate_shelves
+    stock_shelves(book_hashes)
 
-    stock_shelves
+    @checked_out = []
   end
 
   def directory
-    sorted_books = @books.sort_by do |book|
+    all_books = collect_books
+    sorted_books = all_books.sort_by do |book|
       [book.author["last_name"], book.title]
     end
-    sorted_books.each { |book| puts book.to_s }
+    sorted_books.each { |book| puts book }
   end
 
   private
-
-  def generate_books(books)
-    books.map { |book_hash| Book.new(book_hash) }
-  end
 
   def generate_shelves
     shelves = Hash.new { |hash, key| hash[key] = Shelf.new(key) }
@@ -29,11 +26,31 @@ class Library
     shelves
   end
 
-  def stock_shelves
-    @books.map do |book|
+  def generate_books(book_hashes)
+    book_hashes.map { |book_hash| Book.new(book_hash) }
+  end
+
+  def shelve(book_objects)
+    book_objects.map do |book|
       shelf = @shelves[(book.author["last_name"][0]).to_sym]
       shelf.add(book)
     end
+  end
+
+  def stock_shelves(book_hashes)
+    books = generate_books(book_hashes)
+    shelve(books)
+  end
+
+  def collect_books
+    all_books = []
+    @shelves.values.each do |shelf|
+      shelf.books.each do |book|
+        all_books << book
+      end
+    end
+    @checked_out.each { |book| all_books << book }
+    all_books
   end
 end
 

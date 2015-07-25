@@ -8,7 +8,15 @@ class BookTest < MiniTest::Test
   end
 
   def test_to_s
-    assert_equal "\"To Kill A Mockingbird\"\nAuthor: Harper Lee\nStatus: In\n\n",
+    assert_equal "\"To Kill A Mockingbird\"\n" +
+                 "Author: Harper Lee\n" +
+                 "Status: In\n\n",
                  @book.to_s
+  end
+
+  def test_status
+    assert_equal "In", @book.status
+    @book.available = false
+    assert_equal "Out", @book.status
   end
 end
