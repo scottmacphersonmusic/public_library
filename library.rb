@@ -31,7 +31,7 @@ class Library
   def stock_shelves
     @books.map do |book|
       shelf = @shelves[(book.author["last_name"][0]).to_sym]
-      shelf.shelve(book)
+      shelf.add(book)
     end
   end
 end
@@ -44,8 +44,17 @@ class Shelf
     @books = []
   end
 
-  def shelve(book)
+  def add(book)
     @books << book
+  end
+
+  def remove(book_title)
+    index = @books.index { |b| b.title == book_title }
+    if index
+      @books.delete_at(index)
+    else
+      puts "'#{book_title}' is not on the shelf."
+    end
   end
 end
 
