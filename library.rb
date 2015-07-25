@@ -4,6 +4,7 @@ class Library
   def initialize(books)
     @books   ||= generate_books(books)
     @shelves ||= generate_shelves
+
     stock_shelves
   end
 
@@ -11,7 +12,7 @@ class Library
     sorted_books = @books.sort_by do |book|
       [book.author["last_name"], book.title]
     end
-    sorted_books.each { |book| puts book }
+    sorted_books.each { |book| puts book.to_s }
   end
 
   private
@@ -60,14 +61,27 @@ end
 
 class Book
   attr_reader :title, :author, :genre
+  attr_accessor :available
 
   def initialize(attr = {})
     @title     = attr[:title]
     @author    = attr[:author]
     @genre     = attr[:genre]
+    @available = true
   end
 
   def to_s
-    "\"#{@title}\" by #{@author['first_name']} #{@author['last_name']}"
+    "\"#{@title}\"\n" +
+      "Author: #{@author['first_name']} " +
+      "#{@author['last_name']}\n" +
+      "Status: #{status}\n\n"
+  end
+
+  def status
+    if @available
+      "In"
+    else
+      "Out"
+    end
   end
 end

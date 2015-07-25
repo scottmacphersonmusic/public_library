@@ -15,8 +15,10 @@ class LibraryTest < MiniTest::Test
   end
 
   def test_directory_prints_alphabetically_by_author_last_name
-    assert_output(/\A"Guns, Germs and Steel" by Jared Diamond/) { @lib.directory }
-    assert_output(/Talk About Running" by Haruki Murakami\n\z/) { @lib.directory }
+    start = /\A"Guns, Germs and Steel"\nAuthor: Jared Diamond\nStatus: In\n/
+    assert_output(start) { @lib.directory }
+    finish = /Talk About Running"\nAuthor: Haruki Murakami\nStatus: In\n\n\z/
+    assert_output(finish) { @lib.directory }
   end
 
   def test_library_shelves_is_a_hash_of_shelf_objects

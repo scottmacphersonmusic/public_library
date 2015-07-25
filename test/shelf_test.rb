@@ -6,7 +6,7 @@ class ShelfTest < MiniTest::Test
   def setup
     @shelf_1 = Shelf.new(:M)
     @book_objects = [Wonderland, One_Q84, Underground,
-             Poodir, Running, Autumns].map do |book|
+                     Poodir, Running, Autumns].map do |book|
       Book.new(book)
     end
     @shelf_2 = Shelf.new(:M)
@@ -33,9 +33,11 @@ class ShelfTest < MiniTest::Test
   end
 
   def test_remove_book_that_isnt_present
+    # prints error message
     assert_output("'non-present title' is not on the shelf.\n") do
       @shelf_2.remove('non-present title')
     end
+    # doesn't remove any books
     assert_equal 6, @shelf_2.books.length
   end
 end
