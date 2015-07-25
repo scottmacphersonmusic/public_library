@@ -1,8 +1,9 @@
 class Library
-  attr_reader :books
+  attr_accessor :books, :shelves
 
   def initialize(books)
-    @books = books.map { |book_hash| Book.new(book_hash)}
+    @books   ||= generate_books(books)
+    @shelves ||= generate_shelves
   end
 
   def directory
@@ -11,9 +12,30 @@ class Library
     end
     sorted_books.each { |book| puts book }
   end
+
+  private
+
+  def generate_books(books)
+    books.map { |book_hash| Book.new(book_hash) }
+  end
+
+  def generate_shelves
+    shelves = Hash.new { |hash, key| hash[key] = Shelf.new(key) }
+    ("A".."Z").to_a.map do |name|
+      shelves[name.to_sym]
+    end
+    shelves
+  end
+
 end
 
 class Shelf
+  attr_accessor :name, :books
+
+  def initialize(name)
+    @name = name
+    @books = []
+  end
 end
 
 class Book

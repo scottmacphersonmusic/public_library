@@ -18,4 +18,11 @@ class LibraryTest < MiniTest::Test
     assert_output(/\A"Guns, Germs and Steel" by Jared Diamond/) { @lib.directory }
     assert_output(/Talk About Running" by Haruki Murakami\n\z/) { @lib.directory }
   end
+
+  def test_library_shelves_is_a_hash_of_shelf_objects
+    assert_instance_of Hash, @lib.shelves
+    @lib.shelves.each_value do |value|
+      assert_instance_of Shelf, value
+    end
+  end
 end
