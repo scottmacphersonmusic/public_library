@@ -25,4 +25,9 @@ class LibraryTest < MiniTest::Test
       assert_instance_of Shelf, value
     end
   end
+
+  def test_books_are_shelved_upon_initialization
+    assert_equal 6, @lib.shelves[:M].books.length
+    assert_equal 1, @lib.shelves[:E].books.length
+  end
 end

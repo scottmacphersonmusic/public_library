@@ -4,6 +4,7 @@ class Library
   def initialize(books)
     @books   ||= generate_books(books)
     @shelves ||= generate_shelves
+    stock_shelves
   end
 
   def directory
@@ -27,6 +28,12 @@ class Library
     shelves
   end
 
+  def stock_shelves
+    @books.map do |book|
+      shelf = @shelves[(book.author["last_name"][0]).to_sym]
+      shelf.shelve(book)
+    end
+  end
 end
 
 class Shelf
