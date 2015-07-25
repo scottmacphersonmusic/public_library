@@ -36,6 +36,10 @@ class Shelf
     @name = name
     @books = []
   end
+
+  def shelve(book)
+    @books << book
+  end
 end
 
 class Book
