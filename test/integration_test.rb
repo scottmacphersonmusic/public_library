@@ -25,6 +25,5 @@ class IntegrationTest < MiniTest::Test
     @lib.checkout(@book.title)
     assert_equal "Hard-Boiled Wonderland and the End of the World",
                  @lib.checked_out[0].title
-
   end
 end
