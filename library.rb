@@ -123,3 +123,83 @@ class Book
     end
   end
 end
+
+#  Usage  # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# First we'll gather some books to donate to the library:
+
+Mockingbird = { title: "To Kill A Mockingbird",
+                author: { "first_name" => "Harper",
+                          "last_name" => "Lee"},
+                genre: "Fiction" }
+
+Wonderland = { title: "Hard-Boiled Wonderland and the End of the World",
+               author: { "first_name" => "Haruki",
+                         "last_name" => "Murakami"},
+               genre: "Fiction" }
+
+One_Q84 = { title: "1Q84",
+            author: { "first_name" => "Haruki",
+                      "last_name" => "Murakami"},
+            genre: "Fiction" }
+
+Steel = { title: "Guns, Germs and Steel",
+          author: { "first_name" => "Jared",
+                    "last_name" => "Diamond"},
+          genre: "History" }
+
+Underground = { title: "Underground: The Tokyo Gas Attack and the Japanese Pysche",
+                author: { "first_name" => "Haruki",
+                          "last_name" => "Murakami" },
+                genre: "Non-Fiction" }
+
+
+Poodir = { title: "Practical Object-Oriented Design In Ruby",
+           author: { "first_name" => "Sandi",
+                     "last_name" => "Metz" },
+           genre: "Programming" }
+
+BriefHistory = { title: "A Brief History Of Time",
+                 author: { "first_name" => "Stephen",
+                           "last_name" => "Hawking" },
+                 genre: "Popular Science" }
+
+WhatWhat = { title: "What Is The What",
+             author: { "first_name" => "Dave",
+                       "last_name" => "Eggars" },
+             genre: "Memoir" }
+
+Running = { title: "What I Talk About When I Talk About Running",
+            author: { "first_name" => "Haruki",
+                      "last_name" => "Murakami" },
+            genre: "Memoir" }
+
+Autumns = { title: "The Thousand Autumns of Jacob de Zoet: A novel",
+            author: { "first_name" => "David",
+                      "last_name" => "Mitchell" },
+            genre: "Fiction" }
+
+Lib = [Mockingbird, Wonderland, One_Q84, Steel,
+       Underground, Poodir, BriefHistory, WhatWhat, Running, Autumns]
+
+# Now initialize a new instance of Library using the above books:
+
+lib = Library.new(Lib)
+
+# Browse books using the directory:
+
+lib.directory
+
+# Checkout some books:
+
+lib.checkout "Practical Object-Oriented Design In Ruby"
+
+lib.checkout "1Q84"
+
+# Browsing the directory at this time will show these books are checked-out.
+
+# Having read some books, return them:
+
+lib.return "1Q84"
+
+lib.return "Practical Object-Oriented Design In Ruby"
