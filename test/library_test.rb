@@ -39,4 +39,10 @@ class LibraryTest < MiniTest::Test
           @lib_2.checkout("Harry Potter and the Sorcerer's Stone")
     end
   end
+
+  def test_return_prints_message_if_book_title_not_recognized
+    assert_output("Oops! That book doesn't belong to this library.\n") do
+      @lib.return("")
+    end
+  end
 end

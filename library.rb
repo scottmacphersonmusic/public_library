@@ -35,7 +35,7 @@ class Library
       book.available = true
       shelve([book])
     else
-      puts "not present"
+      puts "Oops! That book doesn't belong to this library."
     end
   end
 
