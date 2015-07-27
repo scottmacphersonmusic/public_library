@@ -13,7 +13,9 @@ class Library
     sorted_books = all_books.sort_by do |book|
       [book.author["last_name"], book.title]
     end
+    puts "\n\nDirectory" + (" #" * 15) + "\n\n"
     sorted_books.each { |book| puts book }
+    puts "# " * 15
   end
 
   def checkout(book_title)
@@ -23,6 +25,7 @@ class Library
       removed_book = @shelves[shelf].remove(book.title)
       removed_book.available = false
       @checked_out << removed_book
+      puts "#{removed_book.title} has been checked out."
     else
       puts "That book is currently checked out."
     end
@@ -34,6 +37,7 @@ class Library
       book = @checked_out.delete_at(index)
       book.available = true
       shelve([book])
+      puts "#{book.title} has been returned."
     else
       puts "Oops! That book doesn't belong to this library."
     end
@@ -192,14 +196,14 @@ lib.directory
 
 # Checkout some books:
 
-lib.checkout "Practical Object-Oriented Design In Ruby"
+# lib.checkout "Practical Object-Oriented Design In Ruby"
 
-lib.checkout "1Q84"
+# lib.checkout "1Q84"
 
 # Browsing the directory at this time will show these books are checked-out.
 
 # Having read some books, return them:
 
-lib.return "1Q84"
+# lib.return "1Q84"
 
-lib.return "Practical Object-Oriented Design In Ruby"
+# lib.return "Practical Object-Oriented Design In Ruby"
