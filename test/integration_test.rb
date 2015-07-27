@@ -26,4 +26,21 @@ class IntegrationTest < MiniTest::Test
     assert_equal "Hard-Boiled Wonderland and the End of the World",
                  @lib.checked_out[0].title
   end
+
+  def test_return_reshelves_book
+    @lib.checkout(@book.title)
+    @lib.return(@book.title)
+    assert_equal 0, @lib.checked_out.length
+    assert @lib.shelves[:M].books.index { |b| b.title == @book.title }
+  end
+
+  def test_return_updates_availability_status
+    @lib.checkout(@book.title)
+    @lib.return(@book.title)
+    shelf = @lib.shelves[:M]
+    index = shelf.books.index do |book|
+      book.title == @book.title
+    end
+    assert shelf.books[index].available
+  end
 end

@@ -18,10 +18,25 @@ class Library
 
   def checkout(book_title)
     book = collect_books.find { |b| b.title == book_title }
-    shelf = book.author['last_name'][0].to_sym
-    removed_book = @shelves[shelf].remove(book.title)
-    removed_book.available = false
-    @checked_out << removed_book
+    if book.available
+      shelf = book.author['last_name'][0].to_sym
+      removed_book = @shelves[shelf].remove(book.title)
+      removed_book.available = false
+      @checked_out << removed_book
+    else
+      puts "That book is currently checked out."
+    end
+  end
+
+  def return(book_title)
+    index = @checked_out.index { |book| book.title == book_title }
+    if index
+      book = @checked_out.delete_at(index)
+      book.available = true
+      shelve([book])
+    else
+      puts "not present"
+    end
   end
 
   private
