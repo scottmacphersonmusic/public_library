@@ -13,9 +13,7 @@ class Library
     sorted_books = all_books.sort_by do |book|
       [book.author["last_name"], book.title]
     end
-    puts "\n\nDirectory" + (" #" * 15) + "\n\n"
     sorted_books.each { |book| puts book }
-    puts "# " * 15
   end
 
   def checkout(book_title)
@@ -113,10 +111,8 @@ class Book
   end
 
   def to_s
-    "\"#{@title}\"\n" +
-      "Author: #{@author['first_name']} " +
-      "#{@author['last_name']}\n" +
-      "Status: #{status}\n\n"
+    %Q|"#{@title}"\nAuthor: #{@author['first_name']} | \
+      "#{@author['last_name']}\nStatus: #{status}\n\n"
   end
 
   def status
@@ -188,11 +184,11 @@ Lib = [Mockingbird, Wonderland, One_Q84, Steel,
 
 # Now initialize a new instance of Library using the above books:
 
-lib = Library.new(Lib)
+# lib = Library.new(Lib)
 
 # Browse books using the directory:
 
-lib.directory
+# lib.directory
 
 # Checkout some books:
 
