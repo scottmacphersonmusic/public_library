@@ -27,6 +27,12 @@ class IntegrationTest < MiniTest::Test
                  @lib.checked_out[0].title
   end
 
+  def test_checkout_with_invalid_title_returns_message
+    assert_output("Sorry, we don't have that book.\n") do
+      @lib.checkout("Fifty Shades of Grey")
+    end
+  end
+
   def test_return_reshelves_book
     @lib.checkout(@book.title)
     @lib.return(@book.title)

@@ -9,16 +9,17 @@ class Library
   end
 
   def directory
-    all_books = collect_books
-    sorted_books = all_books.sort_by do |book|
+    sorted_books = collect_books.sort_by do |book|
       [book.author["last_name"], book.title]
     end
-    sorted_books.each { |book| puts book }
+    puts sorted_books.each { |book| puts book }
   end
 
   def checkout(book_title)
     book = collect_books.find { |b| b.title == book_title }
-    if book.available
+    if book.nil?
+      puts "Sorry, we don't have that book."
+    elsif book.available
       shelf = book.author['last_name'][0].to_sym
       removed_book = @shelves[shelf].remove(book.title)
       removed_book.available = false
@@ -68,14 +69,7 @@ class Library
   end
 
   def collect_books
-    all_books = []
-    @shelves.values.each do |shelf|
-      shelf.books.each do |book|
-        all_books << book
-      end
-    end
-    @checked_out.each { |book| all_books << book }
-    all_books
+    @shelves.values.map(&:books).flatten + @checked_out
   end
 end
 

@@ -31,13 +31,4 @@ class ShelfTest < MiniTest::Test
     # make sure remove returns book object
     assert_equal title, book.title
   end
-
-  # def test_remove_book_that_isnt_present
-  #   # prints error message
-  #   assert_output("'non-present title' is not on the shelf.\n") do
-  #     @shelf_2.remove('non-present title')
-  #   end
-  #   # doesn't remove any books
-  #   assert_equal 6, @shelf_2.books.length
-  # end
 end
