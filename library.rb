@@ -110,11 +110,7 @@ class Book
   end
 
   def status
-    if @available
-      "In"
-    else
-      "Out"
-    end
+    @available ? "In" : "Out"
   end
 end
 
