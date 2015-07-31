@@ -46,9 +46,7 @@ class Library
 
   def generate_shelves
     shelves = Hash.new { |hash, key| hash[key] = Shelf.new(key) }
-    ("A".."Z").to_a.map do |name|
-      shelves[name.to_sym]
-    end
+    ("A".."Z").to_a.each { |name| shelves[name.to_sym] }
     shelves
   end
 
