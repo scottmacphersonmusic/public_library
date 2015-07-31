@@ -9,6 +9,9 @@ class IntegrationTest < MiniTest::Test
     @book = @shelf.books.find do |book|
       book.title == "Hard-Boiled Wonderland and the End of the World"
     end
+
+    @lib_2 = Library.new(SampleBooks::Lib)
+    @lib_2.checkout(@book.title)
   end
 
   def test_books_are_shelved_upon_initialization
@@ -34,19 +37,23 @@ class IntegrationTest < MiniTest::Test
   end
 
   def test_return_reshelves_book
-    @lib.checkout(@book.title)
-    @lib.return(@book.title)
+    @lib_2.return(@book.title)
     assert_equal 0, @lib.checked_out.length
-    assert @lib.shelves[:M].books.index { |b| b.title == @book.title }
+    assert @lib_2.shelves[:M].books.index { |b| b.title == @book.title }
   end
 
   def test_return_updates_availability_status
-    @lib.checkout(@book.title)
-    @lib.return(@book.title)
-    shelf = @lib.shelves[:M]
+    @lib_2.return(@book.title)
+    shelf = @lib_2.shelves[:M]
     index = shelf.books.index do |book|
       book.title == @book.title
     end
     assert shelf.books[index].available
+  end
+
+  def test_return_invalid_book_title_returns_message
+    assert_output("Oops! That book doesn't belong to this library.\n") do
+      @lib_2.return("Fifty Shades of Grey")
+    end
   end
 end
