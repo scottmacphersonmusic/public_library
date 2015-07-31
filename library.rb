@@ -57,7 +57,7 @@ class Library
   end
 
   def shelve(book_objects)
-    book_objects.map do |book|
+    book_objects.each do |book|
       shelf = @shelves[(book.author["last_name"][0]).to_sym]
       shelf.add(book)
     end
