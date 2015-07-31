@@ -2,7 +2,7 @@ class Library
   attr_accessor :shelves, :checked_out
 
   def initialize(book_hashes)
-    @shelves ||= generate_shelves
+    @shelves = generate_shelves
     stock_shelves(book_hashes)
 
     @checked_out = []
