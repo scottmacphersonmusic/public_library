@@ -19,4 +19,17 @@ class BookTest < MiniTest::Test
     @book.available = false
     assert_equal "Out", @book.status
   end
+
+  def test_available?
+    assert_equal true, @book.available?
+    @book.available = false
+    assert_equal false, @book.available?
+  end
+
+  def test_toggle_availability
+    @book.toggle_availability
+    refute @book.available
+    @book.toggle_availability
+    assert @book.available
+  end
 end

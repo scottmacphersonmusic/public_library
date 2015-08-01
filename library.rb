@@ -110,6 +110,14 @@ class Book
   def status
     @available ? "In" : "Out"
   end
+
+  def available?
+    @available ? true : false
+  end
+
+  def toggle_availability
+    @available ? @available = false : @available = true
+  end
 end
 
 #  Usage  # # # # # # # # # # # # # # # # # # # # # # # # # #
