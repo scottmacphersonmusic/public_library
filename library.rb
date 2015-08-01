@@ -19,10 +19,10 @@ class Library
     book = collect_books.find { |b| b.title == book_title }
     if book.nil?
       puts "Sorry, we don't have that book."
-    elsif book.available
+    elsif book.available?
       shelf = book.author['last_name'][0].to_sym
       removed_book = @shelves[shelf].remove(book.title)
-      removed_book.available = false
+      removed_book.toggle_availability
       @checked_out << removed_book
       puts "#{removed_book.title} has been checked out."
     else
@@ -34,7 +34,7 @@ class Library
     index = @checked_out.index { |book| book.title == book_title }
     if index
       book = @checked_out.delete_at(index)
-      book.available = true
+      book.toggle_availability
       shelve([book])
       puts "#{book.title} has been returned."
     else
