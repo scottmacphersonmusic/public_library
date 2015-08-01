@@ -24,7 +24,7 @@ class Library
       removed_book = @shelves[shelf].remove(book.title)
       removed_book.toggle_availability
       @checked_out << removed_book
-      puts "#{removed_book.title} has been checked out."
+      puts %Q|"#{removed_book.title}" has been checked out.|
     else
       puts "That book is currently checked out."
     end
@@ -36,7 +36,7 @@ class Library
       book = @checked_out.delete_at(index)
       book.toggle_availability
       shelve([book])
-      puts "#{book.title} has been returned."
+      puts %Q|"#{book.title}" has been returned.|
     else
       puts "Oops! That book doesn't belong to this library."
     end
