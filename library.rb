@@ -12,7 +12,7 @@ class Library
     sorted_books = collect_books.sort_by do |book|
       [book.author["last_name"], book.title]
     end
-    puts sorted_books.each { |book| puts book }
+    sorted_books.each { |book| puts book }
   end
 
   def checkout(book_title)
