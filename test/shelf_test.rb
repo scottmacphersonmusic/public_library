@@ -8,7 +8,7 @@ class ShelfTest < MiniTest::Test
       Book.new(book)
     end
     @shelf_2 = Shelf.new(:M)
-    @shelf_2.books = @book_objects
+    @book_objects.each { |b| @shelf_2.add(b)}
   end
 
   def test_add

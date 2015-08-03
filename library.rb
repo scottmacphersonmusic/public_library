@@ -3,9 +3,16 @@ class Library
 
   def initialize(book_hashes)
     @shelves = generate_shelves
+    @catalog = {}
     stock_shelves(book_hashes)
 
     @checked_out = []
+  end
+
+  def add_new_book(book)
+    return puts "We already have this book." if @catalog[book.title]
+    @catalog[book.title] = book.author['last_name']
+    shelve(book)
   end
 
   def directory
@@ -16,10 +23,9 @@ class Library
   end
 
   def checkout(book_title)
-    book = collect_books.find { |b| b.title == book_title }
-    if book.nil?
-      puts "Sorry, we don't have that book."
-    elsif book.available?
+    return puts "Sorry, we don't have that book." unless @catalog[book_title]
+    book = shelf_for_title(book_title).get_book(book_title)
+    if book
       shelf = book.author['last_name'][0].to_sym
       removed_book = @shelves[shelf].remove(book.title)
       removed_book.toggle_availability
@@ -35,7 +41,7 @@ class Library
     if index
       book = @checked_out.delete_at(index)
       book.toggle_availability
-      shelve([book])
+      shelve(book)
       puts %Q|"#{book.title}" has been returned.|
     else
       puts "Oops! That book doesn't belong to this library."
@@ -43,6 +49,11 @@ class Library
   end
 
   private
+
+  def shelf_for_title(book_title)
+    author_last_name = @catalog[book_title]
+    @shelves[author_last_name[0].to_sym]
+  end
 
   def generate_shelves
     shelves = Hash.new { |hash, key| hash[key] = Shelf.new(key) }
@@ -54,16 +65,14 @@ class Library
     book_hashes.map { |book_hash| Book.new(book_hash) }
   end
 
-  def shelve(book_objects)
-    book_objects.each do |book|
-      shelf = @shelves[(book.author["last_name"][0]).to_sym]
-      shelf.add(book)
-    end
+  def shelve(book)
+    shelf = @shelves[(book.author["last_name"][0]).to_sym]
+    shelf.add(book)
   end
 
   def stock_shelves(book_hashes)
     books = generate_books(book_hashes)
-    shelve(books)
+    books.each { |book| add_new_book(book) }
   end
 
   def collect_books
@@ -72,22 +81,27 @@ class Library
 end
 
 class Shelf
-  attr_accessor :name, :books
+  attr_reader :name
 
   def initialize(name)
     @name = name
-    @books = []
+    @books = {}
+  end
+
+  def books
+    @books.values
+  end
+
+  def get_book(book_title)
+    @books[book_title]
   end
 
   def add(book)
-    @books << book
+    @books[book.title] = book
   end
 
   def remove(book_title)
-    index = @books.index { |b| b.title == book_title }
-    if index
-      return @books.delete_at(index)
-    end
+    @books.delete(book_title)
   end
 end
 
@@ -180,13 +194,22 @@ Lib = [Mockingbird, Wonderland, One_Q84, Steel,
 
 # Now initialize a new instance of Library using the above books:
 
-# lib = Library.new(Lib)
+lib = Library.new(Lib)
 
 # Browse books using the directory:
 
 # lib.directory
 
+# Donate another book to the library:
+
+# lib.add_new_book(Book.new({ title: "Between The World And Me",
+#                             author: { "first_name" => "Ta-Nehisi",
+#                                       "last_name" => "Coates" },
+#                             genre: "Non-Fiction" }))
+
 # Checkout some books:
+
+# lib.checkout "Between The World And Me"
 
 # lib.checkout "Practical Object-Oriented Design In Ruby"
 
@@ -199,3 +222,5 @@ Lib = [Mockingbird, Wonderland, One_Q84, Steel,
 # lib.return "1Q84"
 
 # lib.return "Practical Object-Oriented Design In Ruby"
+
+# One issue with the above approach is that it is only possible to have one copy of each book.  An improvement would be to track the books with IDs instead of by title so that there could be multiple copies.
