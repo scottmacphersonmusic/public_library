@@ -1,8 +1,6 @@
 require './test/test_helper'
 
 class BookTest < MiniTest::Test
-  include SampleBooks
-
   def setup
     @book = Book.new(SampleBooks::Mockingbird)
   end

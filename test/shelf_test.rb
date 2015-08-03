@@ -1,8 +1,6 @@
 require './test/test_helper'
 
 class ShelfTest < MiniTest::Test
-  include SampleBooks
-
   def setup
     @shelf_1 = Shelf.new(:M)
     @book_objects = [Wonderland, One_Q84, Underground,

@@ -1,8 +1,6 @@
 require './test/test_helper'
 
 class IntegrationTest < MiniTest::Test
-  include SampleBooks
-
   def setup
     @lib = Library.new(SampleBooks::Lib)
     @shelf = @lib.shelves[:M]

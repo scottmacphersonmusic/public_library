@@ -1,8 +1,6 @@
 require './test/test_helper'
 
 class LibraryTest < MiniTest::Test
-  include SampleBooks
-
   def setup
     @lib = Library.new(SampleBooks::Lib)
 
